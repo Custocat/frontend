@@ -39,17 +39,14 @@
     
 
 <script>
-  // Required packages
-  const fs = require('fs')
+  function getFiles() {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", '/files', false); // false for synchronous request
+    xmlHttp.send(null);
+    return JSON.parse(xmlHttp.responseText);
+  }
 
-  // Sub image arrays
-  var headImgArray = getFiles('./images/head/')
-  var armImgArray = getFiles('./images/arms/')
-  var legImgArray = getFiles('./images/legs/')
-  var extraImgArray = getFiles('./images/accessory/')
-
-  // Main array of image arrays
-  var mainArray = [headImgArray, armImgArray, legImgArray, extraImgArray]
+  var mainArray = getFiles()
 
   // Counter array that holds the current image for each image array
   var counterArr = [0,0,0,0,0]
@@ -122,21 +119,6 @@
   // Get a random int value between a min and a max
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
-  }
-
-
-  // Get all files in a folder and return an array containing their names
-  function getFiles(dir){
-    fileList = [];
-    var files = fs.readdirSync(dir);
-    for(var i in files){
-        if (!files.hasOwnProperty(i)) continue;
-        var name = dir+'/'+files[i];
-        if (!fs.statSync(name).isDirectory()){
-            fileList.push(name);
-        }
-    }
-    return fileList;
   }
 
   </script>
