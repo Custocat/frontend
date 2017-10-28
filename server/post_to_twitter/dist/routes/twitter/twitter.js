@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _twitter = require("../../controllers/twitter/twitter");
 
+var _twitter2 = _interopRequireDefault(_twitter);
+
 var _image = require("../../controllers/image/image");
 
 var _image2 = _interopRequireDefault(_image);
@@ -22,7 +24,7 @@ function twitterRoutes(app) {
     app.post("/twitter/tweet", function (req, res) {
         console.log(req.body);
         var message = req.body.message;
-        _twitter.client.post("statuses/update", {
+        _twitter2.default.post("statuses/update", {
             "Name": "A tweet",
             "status": message
         }, function (tweets, error, response) {
@@ -41,7 +43,7 @@ function twitterRoutes(app) {
     app.post("/image/:id/tweet", function (req, res) {
         var image_name = req.body.image_name;
         var image = new _image2.default(req.params.id);
-        _twitter.client.post("media/upload", {
+        _twitter2.default.post("media/upload", {
             name: image_name,
             command: "INIT",
             total_bytes: image.size

@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.client = undefined;
 
 var _twitter = require("twitter");
 
@@ -24,4 +23,4 @@ var client = new _twitter2.default({
     access_token_secret: env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
-exports.client = client;
+exports.default = client;

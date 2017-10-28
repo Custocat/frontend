@@ -12,8 +12,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var image = function image(image_id) {
-    _classCallCheck(this, image);
+var Image = function Image(image_id) {
+    _classCallCheck(this, Image);
 
     if (!_fs2.default.existsSync("uploads/" + image_id)) {
         throw Error("Image doesn't exist");
@@ -25,4 +25,4 @@ var image = function image(image_id) {
     this.size = _fs2.default.statSync(this.path).size;
 };
 
-exports.default = image;
+exports.default = Image;

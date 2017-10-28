@@ -1,5 +1,5 @@
 import fs from "fs"
-class image
+export default class Image
 {
     constructor(image_id) {
         if (!fs.existsSync("uploads/" + image_id)) {
@@ -12,5 +12,3 @@ class image
         this.size = fs.statSync(this.path).size
     }
 }
-
-export default image
