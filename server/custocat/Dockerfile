@@ -12,11 +12,12 @@ COPY .env /usr/src/app
 # Copy images
 COPY ./images /usr/src/app/images
 #Copy octocats
-COPY ./octocats /usr/src/app/octocats
+# COPY ./octocats /usr/src/app/octocats
 # Copy server files
-COPY server.js /user/src/app
-COPY style.css /user/src/app
+COPY index.html /usr/src/app/
+COPY server.js /usr/src/app/
+COPY style.css /usr/src/app/
 # replace this with your application's default port
 EXPOSE 80
 # Start server
-CMD [ "npm", "start serve" ]
+CMD [ "npm", "run", "serve" ]

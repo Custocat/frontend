@@ -37,5 +37,5 @@ app.get("/files", function(req, res) {
 
 app.use(express.static('.'))
 
-app.listen(evn.PORT, env.HOST)
+app.listen(env.PORT, env.HOST)
 console.log("Server running on " + env.HOST + ":" + env.PORT + ". Use ctr+c to exit.")
