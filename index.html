@@ -6,50 +6,47 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <div> 
-      <img src="images/head/image1.jpg" class="imgHead" id="headImage" width="300px" height="300px"> 
-      <img src="images/legs/image1.jpeg" class="imgLegs" id="legsImage" width="300px" height="300px"> 
-      <img src="images/arms/image1.jpg" class="imgArm" id="armsImage" width="300px" height="300px"> 
-    </div>
-    <br>
-    <div class="buttonPosition">
-        <button onclick="nextImage('headImage', 0)">
-            Next Cat 
-        </button> 
-        <button onclick="previousImage('headImage', 0)">
-          Previous Cat 
-        </button>
-    
-        <button onclick="nextImage('legsImage', 2)">
-          Next Octopus 
-        </button> 
-        <button onclick="previousImage('legsImage', 2)">
-          Previous Octopus
-        </button>
+    <img src="images/head/image1.jpg" class="imgHead" id="headImage" width="300px" height="300px"> 
+    <img src="images/legs/image1.jpeg" class="imgLegs" id="legsImage" width="300px" height="300px"> 
+    <img src="images/arms/image1.jpg" class="imgArm" id="armsImage" width="300px" height="300px"> 
 
-        <button onclick="nextImage('armsImage', 1)">
-            Next Arm 
-        </button> 
-        <button onclick="previousImage('armsImage', 1)">
-          Previous Arm
-        </button>
-        <button onclick="randomiseAll()">Randomise</button>
-    </div>
+    <br>
+
+    <button onclick="nextImage('headImage', 0)" class="nextCat">
+      Next Cat 
+    </button> 
+    <button onclick="nextImage('legsImage', 2)" class="nextOct">
+      Next Octopus 
+    </button> 
+    <button onclick="nextImage('armsImage', 1)" class="nextArm">
+      Next Arm 
+    </button> 
+    
+
+    <button onclick="previousImage('headImage', 0)" class="prevCat">
+      Previous Cat 
+    </button>    
+    <button onclick="previousImage('legsImage', 2)" class="prevOct">
+      Previous Octopus
+    </button>
+    <button onclick="previousImage('armsImage', 1)" class="prevArm">
+      Previous Arm
+    </button>
+
+
+    <button onclick="randomiseAll()" class="random">Randomise</button>
     
     
 
 <script>
-  // Required packages
-  const fs = require('fs')
+  function getFiles() {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", '/files', false); // false for synchronous request
+    xmlHttp.send(null);
+    return JSON.parse(xmlHttp.responseText);
+  }
 
-  // Sub image arrays
-  var headImgArray = getFiles('./images/head/')
-  var armImgArray = getFiles('./images/arms/')
-  var legImgArray = getFiles('./images/legs/')
-  var extraImgArray = getFiles('./images/accessory/')
-
-  // Main array of image arrays
-  var mainArray = [headImgArray, armImgArray, legImgArray, extraImgArray]
+  var mainArray = getFiles()
 
   // Counter array that holds the current image for each image array
   var counterArr = [0,0,0,0,0]
@@ -122,21 +119,6 @@
   // Get a random int value between a min and a max
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
-  }
-
-
-  // Get all files in a folder and return an array containing their names
-  function getFiles(dir){
-    fileList = [];
-    var files = fs.readdirSync(dir);
-    for(var i in files){
-        if (!files.hasOwnProperty(i)) continue;
-        var name = dir+'/'+files[i];
-        if (!fs.statSync(name).isDirectory()){
-            fileList.push(name);
-        }
-    }
-    return fileList;
   }
 
   </script>

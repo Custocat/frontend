@@ -4,7 +4,8 @@
   "description": "An electron based application to create a custom octocat",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "serve": "node server.js"
   },
   "repository": "https://github.com/aaronosher/custocat",
   "keywords": [
@@ -21,5 +22,9 @@
   "license": "MPL-2.0",
   "devDependencies": {
     "electron": "~1.7.8"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "path": "^0.12.7"
   }
 }
