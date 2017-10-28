@@ -11,3 +11,4 @@ app.get("/", function(req, res) {
 app.use(express.static('.'))
 
 app.listen("8080", "127.0.0.1")
+console.log("Server running on 127.0.0.1:8080. Use ctr+c to exit.")
