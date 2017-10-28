@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
+<<<<<<< HEAD
     <div> 
       <img src="images/test/image1.jpg" class="imgHead" id="headImage" width="300px" height="300px"> 
       <img src="images/legs/image1.jpeg" class="imgLegs" id="legsImage" width="300px" height="300px"> 
@@ -138,6 +139,60 @@
         }
     }
     return fileList;
+=======
+    <h1>Hello World!</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    We are using Node.js <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+
+    <img src="images/image1.jpg" id="testImage" width="600px" height="400px"> 
+
+    <button onclick="previousImage('testImage')">
+      Previous Cat 
+    </button>
+
+    <button onclick="nextImage('testImage')">
+      Next Cat 
+    </button>
+
+<script>
+  // Get rid of hard coded array, grab it from a folder of images
+  var imgArray = [
+    'images/image1.jpg',
+    'images/image2.jpg',
+    'images/image3.jpg',
+    'images/image4.jpeg',
+    'images/image5.jpg',
+    'images/image6.jpg',
+    'images/image7.jpeg',
+  ]
+
+  var currImageIndex = 0
+
+  function nextImage(element) {
+    var img = document.getElementById(element)
+    if (currImageIndex == imgArray.length - 1) {
+      img.src = imgArray[0]
+      currImageIndex = 0
+    }
+    else {
+      img.src = imgArray[currImageIndex + 1]
+      currImageIndex += 1
+    }
+  }
+
+  function previousImage(element) {
+    var img = document.getElementById(element)
+    if (currImageIndex == 0) {
+      img.src = imgArray[imgArray.length - 1]
+      currImageIndex = imgArray.length - 1
+    }
+    else {
+      img.src = imgArray[currImageIndex - 1]
+      currImageIndex -= 1
+    }
+>>>>>>> 584bb19ce0f427a501a9f7aef2c66c47068cca8a
   }
 
   </script>
