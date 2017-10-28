@@ -2,61 +2,88 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>CustoCat</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-
-    <img src="images/image1.jpg" id="testImage" width="600px" height="400px"> 
-
-    <button onclick="previousImage('testImage')">
-      Previous Cat 
-    </button>
-
-    <button onclick="nextImage('testImage')">
-      Next Cat 
-    </button>
+    <div> 
+      <img src="images/test/image1.jpg" class="imgHead" id="testImage1" width="300px" height="300px"> 
+      <img src="images/legs/image1.jpeg" class="imgTorso" id="testImage2" width="300px" height="300px"> 
+    </div>
+    <br>
+    <div class="buttonPosition">
+        <button onclick="nextImage('testImage1', 0)">
+            Next Cat 
+        </button> 
+    
+        <button onclick="previousImage('testImage1', 0)">
+          Previous Cat 
+        </button>
+    
+    
+        <button onclick="nextImage('testImage2', 3)">
+            Next Octopus 
+        </button> 
+    
+        <button onclick="previousImage('testImage2', 3)">
+          Previous Octopus
+        </button>
+    </div>
+    
+    
 
 <script>
-  // Get rid of hard coded array, grab it from a folder of images
-  var imgArray = [
-    'images/image1.jpg',
-    'images/image2.jpg',
-    'images/image3.jpg',
-    'images/image4.jpeg',
-    'images/image5.jpg',
-    'images/image6.jpg',
-    'images/image7.jpeg',
-  ]
+  // Required packages
+  const fs = require('fs')
 
-  var currImageIndex = 0
+  // Categorised arrays
+  var catArray = getFiles('./images/test/')
+  var headImgArray = getFiles('./images/head/')
+  var torsoImgArray = getFiles('./images/torso/')
+  var legImgArray = getFiles('./images/legs/')
+  var extraImgArray = getFiles('./images/accessory/')
 
-  function nextImage(element) {
+  // Main arrays
+  var mainArray = [catArray, headImgArray, torsoImgArray, legImgArray, extraImgArray]
+  var counterArr = [0,0,0,0,0]
+
+
+  function nextImage(element, arrayNum) {
     var img = document.getElementById(element)
-    if (currImageIndex == imgArray.length - 1) {
-      img.src = imgArray[0]
-      currImageIndex = 0
+    if (counterArr[arrayNum] == mainArray[arrayNum].length - 1) {
+      counterArr[arrayNum] = 0
+      img.src = mainArray[arrayNum][0]
     }
     else {
-      img.src = imgArray[currImageIndex + 1]
-      currImageIndex += 1
+      counterArr[arrayNum] += 1
+      img.src = mainArray[arrayNum][counterArr[arrayNum]]
     }
   }
 
-  function previousImage(element) {
+  function previousImage(element, arrayNum) {
     var img = document.getElementById(element)
-    if (currImageIndex == 0) {
-      img.src = imgArray[imgArray.length - 1]
-      currImageIndex = imgArray.length - 1
+    if (counterArr[arrayNum] == 0) {
+      counterArr[arrayNum] = mainArray[arrayNum].length - 1
+      img.src = mainArray[arrayNum][counterArr[arrayNum]]
     }
     else {
-      img.src = imgArray[currImageIndex - 1]
-      currImageIndex -= 1
+      counterArr[arrayNum] -= 1
+      img.src = mainArray[arrayNum][counterArr[arrayNum]]
     }
+  }
+
+  function getFiles(dir){
+    fileList = [];
+ 
+    var files = fs.readdirSync(dir);
+    for(var i in files){
+        if (!files.hasOwnProperty(i)) continue;
+        var name = dir+'/'+files[i];
+        if (!fs.statSync(name).isDirectory()){
+            fileList.push(name);
+        }
+    }
+    return fileList;
   }
 
   </script>
