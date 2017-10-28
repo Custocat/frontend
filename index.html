@@ -2,61 +2,141 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>CustoCat</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <div> 
+      <img src="images/head/image1.jpg" class="imgHead" id="headImage" width="300px" height="300px"> 
+      <img src="images/legs/image1.jpeg" class="imgLegs" id="legsImage" width="300px" height="300px"> 
+      <img src="images/arms/image1.jpg" class="imgArm" id="armsImage" width="300px" height="300px"> 
+    </div>
+    <br>
+    <div class="buttonPosition">
+        <button onclick="nextImage('headImage', 0)">
+            Next Cat 
+        </button> 
+        <button onclick="previousImage('headImage', 0)">
+          Previous Cat 
+        </button>
+    
+        <button onclick="nextImage('legsImage', 3)">
+          Next Octopus 
+        </button> 
+        <button onclick="previousImage('legsImage', 3)">
+          Previous Octopus
+        </button>
 
-    <img src="images/image1.jpg" id="testImage" width="600px" height="400px"> 
-
-    <button onclick="previousImage('testImage')">
-      Previous Cat 
-    </button>
-
-    <button onclick="nextImage('testImage')">
-      Next Cat 
-    </button>
+        <button onclick="nextImage('armsImage', 2)">
+            Next Arm 
+        </button> 
+        <button onclick="previousImage('armsImage', 2)">
+          Previous Arm
+        </button>
+        <button onclick="randomiseAll()">Randomise</button>
+    </div>
+    
+    
 
 <script>
-  // Get rid of hard coded array, grab it from a folder of images
-  var imgArray = [
-    'images/image1.jpg',
-    'images/image2.jpg',
-    'images/image3.jpg',
-    'images/image4.jpeg',
-    'images/image5.jpg',
-    'images/image6.jpg',
-    'images/image7.jpeg',
+  // Required packages
+  const fs = require('fs')
+
+  // Sub image arrays
+  var headImgArray = getFiles('./images/head/')
+  var armImgArray = getFiles('./images/arms/')
+  var legImgArray = getFiles('./images/legs/')
+  var extraImgArray = getFiles('./images/accessory/')
+
+  // Main array of image arrays
+  var mainArray = [headImgArray, armImgArray, legImgArray, extraImgArray]
+
+  // Counter array that holds the current image for each image array
+  var counterArr = [0,0,0,0,0]
+
+  // Element Array - Holds tags matched with array numbers
+  var elementArray = [
+    ['headImage', 0],
+    ['armsImage', 1],
+    ['legsImage', 2]
   ]
 
-  var currImageIndex = 0
 
-  function nextImage(element) {
+  function nextImage(element, arrayNum) {
+    // Grab image variable from the document
     var img = document.getElementById(element)
-    if (currImageIndex == imgArray.length - 1) {
-      img.src = imgArray[0]
-      currImageIndex = 0
+    
+    // If the counter is at the end of the array, loop around to the start of the array
+    if (counterArr[arrayNum] == mainArray[arrayNum].length - 1) {
+      counterArr[arrayNum] = 0
+      // Update image source to new value
+      img.src = mainArray[arrayNum][0]
     }
+
+    // Else increase the counter and update image source
     else {
-      img.src = imgArray[currImageIndex + 1]
-      currImageIndex += 1
+      counterArr[arrayNum] += 1
+      img.src = mainArray[arrayNum][counterArr[arrayNum]]
     }
   }
 
-  function previousImage(element) {
+
+  function previousImage(element, arrayNum) {
+    // Grab image variable from the document
     var img = document.getElementById(element)
-    if (currImageIndex == 0) {
-      img.src = imgArray[imgArray.length - 1]
-      currImageIndex = imgArray.length - 1
+    
+    // If the counter is at 0, loop around to the end of the array
+    if (counterArr[arrayNum] == 0) {
+      counterArr[arrayNum] = mainArray[arrayNum].length - 1
+      // Update image source to new value
+      img.src = mainArray[arrayNum][counterArr[arrayNum]]
     }
+
+    // Else decrease the counter and update image source
     else {
-      img.src = imgArray[currImageIndex - 1]
-      currImageIndex -= 1
+      counterArr[arrayNum] -= 1
+      img.src = mainArray[arrayNum][counterArr[arrayNum]]
     }
+  }
+
+
+  function randomiseAll() {
+    // Loop through all elements in the all elements array
+    for (index in elementArray) {     
+      // Grab the arrayNum of the element type
+      let arrayNum = elementArray[index][1]
+
+      // Generate random num for an image that isn't the current image
+      randomNum = getRandomInt(0, mainArray[arrayNum].length)
+      while (randomNum == counterArr[arrayNum]) {
+        randomNum = getRandomInt(0, mainArray[arrayNum].length)
+      }
+
+      // Set the new image and update the current image in the counterArr
+      document.getElementById(elementArray[index][0]).src = mainArray[arrayNum][randomNum]
+      counterArr[arrayNum] = randomNum
+    }
+  }
+  
+  
+  // Get a random int value between a min and a max
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+
+  // Get all files in a folder and return an array containing their names
+  function getFiles(dir){
+    fileList = [];
+    var files = fs.readdirSync(dir);
+    for(var i in files){
+        if (!files.hasOwnProperty(i)) continue;
+        var name = dir+'/'+files[i];
+        if (!fs.statSync(name).isDirectory()){
+            fileList.push(name);
+        }
+    }
+    return fileList;
   }
 
   </script>
