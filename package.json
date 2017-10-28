@@ -1,21 +1,24 @@
 {
-  "name": "electron-quick-start",
+  "name": "Custocat",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "An electron based application to create a custom octocat",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/aaronosher/custocat",
   "keywords": [
+    "Octocat",
+    "Custom Octocat",
+    "GitHub",
     "Electron",
     "quick",
     "start",
     "tutorial",
     "demo"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Aaron Osher, Ollie Favell, Kelvin Minguell",
+  "license": "MPL-2.0",
   "devDependencies": {
     "electron": "~1.7.8"
   }
