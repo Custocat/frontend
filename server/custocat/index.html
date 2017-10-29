@@ -8,10 +8,10 @@
   </head>
   <body>
 
-    <div>
-      <img src="images/head/image1.png" class="imgHead" id="headImage" width="300px" height="300px"> 
+    <div style="display:none">
+      <img src="images/head/image1.jpg" class="imgHead" id="headImage" width="300px" height="300px"> 
       <img src="images/legs/image1.jpeg" class="imgLegs" id="legsImage" width="300px" height="300px"> 
-      <img src="images/arms/image1.png" class="imgArm" id="armsImage" width="300px" height="300px"> 
+      <img src="images/arms/image1.jpg" class="imgArm" id="armsImage" width="300px" height="300px"> 
     </div>
 
     <br>
@@ -44,9 +44,12 @@
       Randomise <span class="glyphicon glyphicon-question-sign"></span>
     </button>
     
+    <canvas id="canvas" width="600" height="600">
+    </canvas>
     
 
 <script>
+
   function getFiles() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", '/files', false); // false for synchronous request
@@ -61,10 +64,12 @@
 
   // Element Array - Holds tags matched with array numbers
   var elementArray = [
-    ['headImage', 0],
     ['armsImage', 1],
-    ['legsImage', 2]
+    ['legsImage', 2],
+    ['headImage', 0]
   ]
+
+  var ctx = initialiseCanvas()
 
 
   function nextImage(element, arrayNum) {
@@ -106,6 +111,9 @@
 
 
   function randomiseAll() {
+    // clean the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
     // Loop through all elements in the all elements array
     for (index in elementArray) {     
       // Grab the arrayNum of the element type
@@ -119,6 +127,36 @@
 
       // Set the new image and update the current image in the counterArr
       document.getElementById(elementArray[index][0]).src = mainArray[arrayNum][randomNum]
+      if (arrayNum == 0) {
+        let headImg = document.getElementById('headImage')
+        if (headImg.complete) {
+          ctx.drawImage(headImg, 300, 10, 300, 300)
+        } else {
+          headImg.onload = function () {
+            ctx.drawImage(headImg, 300, 10, 300, 300)
+          };
+        }
+      }
+      if (arrayNum == 1) {
+        let armsImg = document.getElementById('armsImage')
+        if (armsImg.complete) {
+          ctx.drawImage(armsImg, 20, 150, 300, 300)  
+        } else {
+          armsImg.onload = function () {
+            ctx.drawImage(armsImg, 20, 150, 300, 300)  
+          };
+        }           
+      }
+      if (arrayNum == 2) {
+        let legsImg = document.getElementById('legsImage')
+        if (legsImg.complete) {
+          ctx.drawImage(legsImg, 300, 300, 300, 300)  
+        } else {
+          legsImg.onload = function () {
+            ctx.drawImage(legsImg, 300, 300, 300, 300)  
+          };
+        }
+      }
       counterArr[arrayNum] = randomNum
     }
   }
@@ -129,6 +167,25 @@
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
+
+  function initialiseCanvas() {
+    // Initialise the canvas element
+    let canvas = document.getElementById('canvas')
+    let ctx = canvas.getContext('2d')
+
+    // Drawing functions
+    let headImg = document.getElementById('headImage')
+    let legsImg = document.getElementById('legsImage')
+    let armsImg = document.getElementById('armsImage')
+
+    ctx.drawImage(armsImg, 20, 150, 300, 300)
+    ctx.drawImage(legsImg, 300, 300, 300, 300)
+    ctx.drawImage(headImg, 300, 10, 300, 300)
+
+    return ctx
+  } 
+  
+  initialiseCanvas()
   </script>
   </body>
 </html>
