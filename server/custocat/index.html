@@ -86,7 +86,7 @@
       // Update image source to new value
       img.src = mainArray[arrayNum][0]
       img.onload = function () {
-        fetchImages()         
+        drawImages()         
       }
     }
 
@@ -95,7 +95,7 @@
       counterArr[arrayNum] += 1
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
       img.onload = function () {
-        fetchImages()         
+        drawImages()         
       }
     }
   }
@@ -111,7 +111,7 @@
       // Update image source to new value
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
       img.onload = function () {
-        fetchImages()         
+        drawImages()         
       }
     }
 
@@ -120,7 +120,7 @@
       counterArr[arrayNum] -= 1
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
       img.onload = function () {
-        fetchImages()         
+        drawImages()         
       }
     }
   }
@@ -141,7 +141,7 @@
       // Set the new image and update the current image in the counterArr
       document.getElementById(elementArray[index][0]).src = mainArray[arrayNum][randomNum]
       counterArr[arrayNum] = randomNum
-      fetchImages()
+      drawImages()
     }
   }
   
@@ -151,24 +151,15 @@
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  function fetchImages() {
-    let armsImg = document.getElementById('armsImage')
-    armsImg.onload = function () {
-      let legsImg = document.getElementById('legsImage')
-      legsImg.onload = function () { 
-        let headImg = document.getElementById('headImage')
-        headImg.onload = function () { 
-          drawImages(headImg, legsImg, armsImg)
-        }
-      }
-    }
-  }
 
-  function drawImages(imageHead, imageLegs, imageArms) {
+  function drawImages() {
+		let armsImg = document.getElementById('armsImage')
+		  let legsImg = document.getElementById('legsImage')
+			let headImg = document.getElementById('headImage')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.drawImage(imageArms, 40, 150, 300, 300) 
-    ctx.drawImage(imageLegs, 300, 300, 300, 300) 
-    ctx.drawImage(imageHead, 300, 10, 300, 300) 
+    ctx.drawImage(armsImg, 40, 150, 300, 300) 
+    ctx.drawImage(legsImg, 300, 300, 300, 300) 
+    ctx.drawImage(headImg, 300, 10, 300, 300) 
   }
 
   function initialiseCanvas() {
