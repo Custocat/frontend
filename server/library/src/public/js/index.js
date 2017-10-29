@@ -1,5 +1,5 @@
 function createOctocat(image, name, submitter) {
-    return "<div class='item'><div class='octocat'><img src='https://api.custocat.com/image/" + image + "'></div></div>"
+    return "<div class='col-md-6 col-lg-4 masonry-column'><a class='thumbnail' data-toggle='modal' data-image='" + image + "' data-name='" + name + "' data-submitter='" + submitter + "'><img src='https://api.custocat.com/image/" + image + "'></a><span class='pull-left'>" + name + "</span><span class='pull-right'>By: " + submitter + "</span></div>"
 }
 
 function getOctocats() {
@@ -8,7 +8,8 @@ function getOctocats() {
         method: "get",
         success: function(res) {
             $('#images').empty()
-            res.each(function(octocat) {
+            console.log(res)
+            $.each(res, function(i, octocat) {
                 $('#images').append(createOctocat(octocat.id, octocat.name, octocat.submitter))
             })
         },
