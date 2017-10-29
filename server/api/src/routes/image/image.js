@@ -28,4 +28,23 @@ export default function(app) {
             })
         }
     })
+
+    app.get("/image/:id", function (req, res) {
+        let imageId = req.params.id
+        try {
+            let image = new Image(imageId)
+        } catch (e) {
+            res.status(400).json({
+                err: true,
+                msg: "image doesn't exist"
+            })
+        }
+        res.sendFile(imageId, {
+            root: "uploads",
+            headers: {
+                "Content-Type": "image/png",
+                "image_id": imageId
+            }
+        })
+    })
 }

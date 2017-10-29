@@ -27,6 +27,25 @@ exports.default = function (app) {
             });
         }
     });
+
+    app.get("/image/:id", function (req, res) {
+        var imageId = req.params.id;
+        try {
+            var image = new _image2.default(imageId);
+        } catch (e) {
+            res.status(400).json({
+                err: true,
+                msg: "image doesn't exist"
+            });
+        }
+        res.sendFile(imageId, {
+            root: "uploads",
+            headers: {
+                "Content-Type": "image/png",
+                "image_id": imageId
+            }
+        });
+    });
 };
 
 var _bodyParser = require("body-parser");
