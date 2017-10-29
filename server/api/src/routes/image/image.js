@@ -12,7 +12,7 @@ export default function(app) {
     app.post("/image", uploads.single("octocat"), function(req, res) {
         let newImage = Image.new(req.file, req.body.name, req.body.submitter)
         console.log(newImage)
-        TwitterSubmit(newImage, "New custocat called " + req.body.name + " from " + req.body.submitter + ". Uploaded via the #api")
+        TwitterSubmit(newImage, "@GitHubEducation " + req.body.submitter + " just created a #myoctocat called " + req.body.name + ". #HackNotts")
         if (newImage === false) {
             res.status(400).json({
                 err: true,
