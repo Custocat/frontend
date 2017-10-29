@@ -44,6 +44,19 @@ var Image = function () {
             _fs2.default.writeFileSync("uploads/" + file.filename + ".json", imageDetails);
             return new Image(file.filename);
         }
+    }, {
+        key: "getAll",
+        value: function getAll() {
+            var arrayOfFiles = [];
+            _fs2.default.readdirSync("uploads").forEach(function (file) {
+                if (file.indexOf(".json") < 0) {
+                    console.log(file);
+                    arrayOfFiles.push(new Image(file));
+                }
+            });
+            console.log(arrayOfFiles);
+            return arrayOfFiles;
+        }
     }]);
 
     return Image;

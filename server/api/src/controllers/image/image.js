@@ -25,4 +25,16 @@ export default class Image {
         fs.writeFileSync("uploads/" + file.filename + ".json", imageDetails)
         return new Image(file.filename)
     }
+
+    static getAll() {
+        let arrayOfFiles = []
+        fs.readdirSync("uploads").forEach(function(file) {
+            if (file.indexOf(".json") < 0) {
+                console.log(file)
+                arrayOfFiles.push(new Image(file))
+            }
+        })
+        console.log(arrayOfFiles)
+        return arrayOfFiles
+    }
 }
