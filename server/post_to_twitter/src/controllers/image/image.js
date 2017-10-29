@@ -8,7 +8,7 @@ export default class Image
 
         this.id = image_id
         this.path = "uploads/" + image_id
-        // console.log(fs.statSync(this.path))
         this.size = fs.statSync(this.path).size
+        this.image = fs.readFileSync(this.path)
     }
 }

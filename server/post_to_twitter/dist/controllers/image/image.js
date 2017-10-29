@@ -21,8 +21,8 @@ var Image = function Image(image_id) {
 
     this.id = image_id;
     this.path = "uploads/" + image_id;
-    // console.log(fs.statSync(this.path))
     this.size = _fs2.default.statSync(this.path).size;
+    this.image = _fs2.default.readFileSync(this.path);
 };
 
 exports.default = Image;
