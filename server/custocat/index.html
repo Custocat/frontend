@@ -8,6 +8,29 @@
   </head>
   <body>
 
+      <nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
+          <a class="navbar-brand" href="/">CustoCat.com</a>
+          <ul class="nav navbar-nav">
+              <li>
+                  <a href="https://library.custocat.com">Custocat Library</a>
+              </li>
+              <li class="active">
+                  <a href="/">Create your own
+                      <span class="sr-only">(current)</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="https://www.twitter.com/custocat" target="_blank">Twitter</a>
+              </li>
+              <li>
+                  <a href="https://github.com/aaronosher/custocat" target="_blank">GitHub</a>
+              </li>
+              <li>
+                  <a href="https://www.devpost.com" target="_blank">DevPost</a>
+              </li>
+          </ul>
+      </nav>
+      
     <div style="display:none">
       <img src="images/head/image1.jpg" class="imgHead" id="headImage" width="300px" height="300px"> 
       <img src="images/legs/image1.jpeg" class="imgLegs" id="legsImage" width="300px" height="300px"> 
@@ -44,13 +67,17 @@
       Randomise <span class="glyphicon glyphicon-question-sign"></span>
     </button>
 
-    <button onclick="saveImage()" class="btn btn-success">
-      Save Image
+    <button onclick="saveImage()" class="btn btn-success save">
+      Upload Octocat <span class="glyphicon glyphicon-open"></span>
     </button>
     
     <canvas id="canvas" width="600" height="600">
     </canvas>
     
+    <hr />
+    <div class="footer container small center">
+        The Octocat is a registered trademark of GitHub. We do not claim the rights to any images on our site.
+    </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
@@ -182,7 +209,7 @@
   } 
 
   function saveImage() {
-    var fileName = prompt("Please enter the file name", "imageName") + ".png"
+    var fileName = prompt("Please enter your Octocat name", "") + ".png"
     var twitterHandle = prompt("Please enter your Twitter Handle", "@")
     var imgData = ctx.getImageData(0, 0, 600, 600)
 
