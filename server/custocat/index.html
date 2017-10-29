@@ -8,10 +8,33 @@
   </head>
   <body>
 
-    <div>
-      <img src="images/head/image1.png" class="imgHead" id="headImage" width="300px" height="300px"> 
+      <nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
+          <a class="navbar-brand" href="/">CustoCat.com</a>
+          <ul class="nav navbar-nav">
+              <li>
+                  <a href="https://library.custocat.com">Custocat Library</a>
+              </li>
+              <li class="active">
+                  <a href="/">Create your own
+                      <span class="sr-only">(current)</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="https://www.twitter.com/custocat" target="_blank">Twitter</a>
+              </li>
+              <li>
+                  <a href="https://github.com/aaronosher/custocat" target="_blank">GitHub</a>
+              </li>
+              <li>
+                  <a href="https://www.devpost.com" target="_blank">DevPost</a>
+              </li>
+          </ul>
+      </nav>
+
+    <div style="display:none">
+      <img src="images/head/image1.jpg" class="imgHead" id="headImage" width="300px" height="300px"> 
       <img src="images/legs/image1.jpeg" class="imgLegs" id="legsImage" width="300px" height="300px"> 
-      <img src="images/arms/image1.png" class="imgArm" id="armsImage" width="300px" height="300px"> 
+      <img src="images/arms/image1.jpg" class="imgArm" id="armsImage" width="300px" height="300px"> 
     </div>
 
     <br>
@@ -43,10 +66,23 @@
     <button onclick="randomiseAll()" class="btn btn-danger random">
       Randomise <span class="glyphicon glyphicon-question-sign"></span>
     </button>
+
+    <button onclick="saveImage()" class="btn btn-success save">
+      Upload Octocat <span class="glyphicon glyphicon-open"></span>
+    </button>
     
+    <canvas id="canvas" width="600" height="600">
+    </canvas>
     
+    <hr />
+    <div class="footer container small center">
+        The Octocat is a registered trademark of GitHub. We do not claim the rights to any images on our site.
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 <script>
+
   function getFiles() {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", '/files', false); // false for synchronous request
@@ -57,14 +93,16 @@
   var mainArray = getFiles()
 
   // Counter array that holds the current image for each image array
-  var counterArr = [0,0,0,0,0]
+  var counterArr = [0,0,0]
 
   // Element Array - Holds tags matched with array numbers
   var elementArray = [
-    ['headImage', 0],
     ['armsImage', 1],
-    ['legsImage', 2]
+    ['legsImage', 2],
+    ['headImage', 0]
   ]
+
+  var ctx = initialiseCanvas()
 
 
   function nextImage(element, arrayNum) {
@@ -76,12 +114,18 @@
       counterArr[arrayNum] = 0
       // Update image source to new value
       img.src = mainArray[arrayNum][0]
+      img.onload = function () {
+        drawImages()         
+      }
     }
 
     // Else increase the counter and update image source
     else {
       counterArr[arrayNum] += 1
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
+      img.onload = function () {
+        drawImages()         
+      }
     }
   }
 
@@ -95,12 +139,18 @@
       counterArr[arrayNum] = mainArray[arrayNum].length - 1
       // Update image source to new value
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
+      img.onload = function () {
+        drawImages()         
+      }
     }
 
     // Else decrease the counter and update image source
     else {
       counterArr[arrayNum] -= 1
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
+      img.onload = function () {
+        drawImages()         
+      }
     }
   }
 
@@ -120,6 +170,7 @@
       // Set the new image and update the current image in the counterArr
       document.getElementById(elementArray[index][0]).src = mainArray[arrayNum][randomNum]
       counterArr[arrayNum] = randomNum
+      drawImages()
     }
   }
   
@@ -128,6 +179,80 @@
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
+
+
+  function drawImages() {
+		let armsImg = document.getElementById('armsImage')
+		  let legsImg = document.getElementById('legsImage')
+			let headImg = document.getElementById('headImage')
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.drawImage(armsImg, 40, 150, 300, 300) 
+    ctx.drawImage(legsImg, 300, 300, 300, 300) 
+    ctx.drawImage(headImg, 300, 10, 300, 300) 
+  }
+
+  function initialiseCanvas() {
+    // Initialise the canvas element
+    let canvas = document.getElementById('canvas')
+    let ctx = canvas.getContext('2d')
+
+    // Drawing functions
+    let headImg = document.getElementById('headImage')
+    let legsImg = document.getElementById('legsImage')
+    let armsImg = document.getElementById('armsImage')
+
+    ctx.drawImage(armsImg, 40, 150, 300, 300)
+    ctx.drawImage(legsImg, 300, 300, 300, 300)
+    ctx.drawImage(headImg, 300, 10, 300, 300)
+
+    return ctx
+  } 
+
+  function saveImage() {
+    var fileName = prompt("Please enter your Octocat name", "") + ".png"
+    var twitterHandle = prompt("Please enter your Twitter Handle", "@")
+    var imgData = ctx.getImageData(0, 0, 600, 600)
+
+    var dataURL = canvas.toDataURL("image/png")
+    var blobBin = atob(dataURL.split(',')[1]);
+    var array = [];
+    for(var i = 0; i < blobBin.length; i++) {
+        array.push(blobBin.charCodeAt(i));
+    }
+    var blob=new Blob([new Uint8Array(array)], {type: 'image/png'});
+
+    uploadOctocat(blob, fileName, twitterHandle)
+  }
+
+  function uploadOctocat(image, name, author) {
+    // Creat an instance of FormData
+    var data = new FormData()
+
+    // Success trakcer
+    var success = false
+    console.log(image)
+    // Add keys
+    data.append("octocat", image)
+    data.append("name", name)
+    data.append("submitter", author)
+
+    console.log(data)
+
+    $.ajax({
+        url: "https://api.custocat.com/image",
+        method: "POST",
+        dataType: "json",
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function(res) { success = true; console.log(res); },
+        error: function(err) { success = false; console.error(err); }
+    })
+
+    return success
+}
+
+  var ctx = initialiseCanvas()  
 
   </script>
   </body>
