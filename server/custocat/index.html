@@ -30,7 +30,7 @@
               </li>
           </ul>
       </nav>
-      
+
     <div style="display:none">
       <img src="images/head/image1.jpg" class="imgHead" id="headImage" width="300px" height="300px"> 
       <img src="images/legs/image1.jpeg" class="imgLegs" id="legsImage" width="300px" height="300px"> 
@@ -201,7 +201,7 @@
     let legsImg = document.getElementById('legsImage')
     let armsImg = document.getElementById('armsImage')
 
-    ctx.drawImage(armsImg, 20, 150, 300, 300)
+    ctx.drawImage(armsImg, 40, 150, 300, 300)
     ctx.drawImage(legsImg, 300, 300, 300, 300)
     ctx.drawImage(headImg, 300, 10, 300, 300)
 
@@ -252,7 +252,7 @@
     return success
 }
 
-  initialiseCanvas()  
+  var ctx = initialiseCanvas()  
 
   </script>
   </body>
