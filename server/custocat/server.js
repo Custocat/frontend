@@ -1,6 +1,7 @@
 let express = require('express')
 let path = require('path')
 let fs = require('fs')
+let env = require('node-env-file')('.env')
 
 let app = express()
 
@@ -36,5 +37,5 @@ app.get("/files", function(req, res) {
 
 app.use(express.static('.'))
 
-app.listen("8080", "127.0.0.1")
-console.log("Server running on 127.0.0.1:8080. Use ctr+c to exit.")
+app.listen(env.PORT, env.HOST)
+console.log("Server running on " + env.HOST + ":" + env.PORT + ". Use ctr+c to exit.")
