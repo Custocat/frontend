@@ -8,9 +8,14 @@ export default class Image {
         this.path = "uploads/" + image_id
         this.size = fs.statSync(this.path).size
         this.image = fs.readFileSync(this.path)
-        let info = JSON.parse(fs.readFileSync("uploads/" + this.id + ".json"))
-        this.submitter = info.submitter
-        this.name = info.name
+        if (fs.existsSync("uploads/" + this.id + ".json")) {
+            let info = JSON.parse(fs.readFileSync("uploads/" + this.id + ".json"))
+            this.submitter = info.submitter
+            this.name = info.name
+        } else {
+            this.submitter = "Unknwon"
+            this.name = "Unknown"
+        }
     }
 
     static new (file, name, submitter) {
