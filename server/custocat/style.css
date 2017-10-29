@@ -57,11 +57,5 @@
 .random {
     position: absolute;
     top: 550px;
-    right: 100px;
-}
-
-.save {
-    position: absolute;
-    top: 550px;
-    right: 400px;
+    right: 250px;
 }
