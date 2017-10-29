@@ -43,6 +43,10 @@
     <button onclick="randomiseAll()" class="btn btn-danger random">
       Randomise <span class="glyphicon glyphicon-question-sign"></span>
     </button>
+
+    <button onclick="saveImage()" class="btn btn-success">
+      Save Image
+    </button>
     
     <canvas id="canvas" width="600" height="600">
     </canvas>
@@ -60,7 +64,7 @@
   var mainArray = getFiles()
 
   // Counter array that holds the current image for each image array
-  var counterArr = [0,0,0,0,0]
+  var counterArr = [0,0,0]
 
   // Element Array - Holds tags matched with array numbers
   var elementArray = [
@@ -81,14 +85,18 @@
       counterArr[arrayNum] = 0
       // Update image source to new value
       img.src = mainArray[arrayNum][0]
-      fetchImages()
+      img.onload = function () {
+        fetchImages()         
+      }
     }
 
     // Else increase the counter and update image source
     else {
       counterArr[arrayNum] += 1
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
-      fetchImages()
+      img.onload = function () {
+        fetchImages()         
+      }
     }
   }
 
@@ -102,14 +110,18 @@
       counterArr[arrayNum] = mainArray[arrayNum].length - 1
       // Update image source to new value
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
-      fetchImages()
+      img.onload = function () {
+        fetchImages()         
+      }
     }
 
     // Else decrease the counter and update image source
     else {
       counterArr[arrayNum] -= 1
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
-      fetchImages()
+      img.onload = function () {
+        fetchImages()         
+      }
     }
   }
 
@@ -128,8 +140,8 @@
 
       // Set the new image and update the current image in the counterArr
       document.getElementById(elementArray[index][0]).src = mainArray[arrayNum][randomNum]
-      fetchImages()
       counterArr[arrayNum] = randomNum
+      fetchImages()
     }
   }
   
@@ -176,15 +188,15 @@
     return ctx
   } 
 
-  initialiseCanvas()
+  function saveImage() {
+    var fileName = prompt("Please enter the file name", "imageName") + ".png"
+    var twitterHandle = prompt("Please enter your Twitter Handle", "@")
+    var imgData = ctx.getImageData(0, 0, 600, 600)
+    console.log(imgData)
+  }
 
-  var link = document.createElement('a');
-    link.innerHTML = 'download image';
-    link.addEventListener('click', function(ev) {
-      link.href = canvas.toDataURL();
-      link.download = "mypainting.png";
-    }, false);
-document.body.appendChild(link);
+
+  initialiseCanvas()  
 
   </script>
   </body>
