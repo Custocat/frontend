@@ -81,14 +81,14 @@
       counterArr[arrayNum] = 0
       // Update image source to new value
       img.src = mainArray[arrayNum][0]
-      drawImages(arrayNum)
+      fetchImages()
     }
 
     // Else increase the counter and update image source
     else {
       counterArr[arrayNum] += 1
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
-      drawImages(arrayNum)
+      fetchImages()
     }
   }
 
@@ -102,22 +102,19 @@
       counterArr[arrayNum] = mainArray[arrayNum].length - 1
       // Update image source to new value
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
-      drawImages(arrayNum)
+      fetchImages()
     }
 
     // Else decrease the counter and update image source
     else {
       counterArr[arrayNum] -= 1
       img.src = mainArray[arrayNum][counterArr[arrayNum]]
-      drawImages(arrayNum)
+      fetchImages()
     }
   }
 
 
   function randomiseAll() {
-    // clean the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-
     // Loop through all elements in the all elements array
     for (index in elementArray) {     
       // Grab the arrayNum of the element type
@@ -131,7 +128,7 @@
 
       // Set the new image and update the current image in the counterArr
       document.getElementById(elementArray[index][0]).src = mainArray[arrayNum][randomNum]
-      drawImages(arrayNum)
+      fetchImages()
       counterArr[arrayNum] = randomNum
     }
   }
@@ -142,39 +139,25 @@
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  function drawImages(arrayNum) {
-    if (arrayNum == 0) {
+  function fetchImages() {
+    let armsImg = document.getElementById('armsImage')
+    armsImg.onload = function () {
+      let legsImg = document.getElementById('legsImage')
+      legsImg.onload = function () { 
         let headImg = document.getElementById('headImage')
-        if (headImg.complete) {
-          ctx.drawImage(headImg, 300, 10, 300, 300)
-        } else {
-          headImg.onload = function () {
-            ctx.drawImage(headImg, 300, 10, 300, 300)
-          }
+        headImg.onload = function () { 
+          drawImages(headImg, legsImg, armsImg)
         }
       }
-      if (arrayNum == 1) {
-        let armsImg = document.getElementById('armsImage')
-        if (armsImg.complete) {
-          ctx.drawImage(armsImg, 20, 150, 300, 300)  
-        } else {
-          armsImg.onload = function () {
-            ctx.drawImage(armsImg, 20, 150, 300, 300)  
-          }
-        }           
-      }
-      if (arrayNum == 2) {
-        let legsImg = document.getElementById('legsImage')
-        if (legsImg.complete) {
-          ctx.drawImage(legsImg, 300, 300, 300, 300)  
-        } else {
-          legsImg.onload = function () {
-            ctx.drawImage(legsImg, 300, 300, 300, 300)  
-          }
-        }
-      }
+    }
   }
 
+  function drawImages(imageHead, imageLegs, imageArms) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.drawImage(imageArms, 40, 150, 300, 300) 
+    ctx.drawImage(imageLegs, 300, 300, 300, 300) 
+    ctx.drawImage(imageHead, 300, 10, 300, 300) 
+  }
 
   function initialiseCanvas() {
     // Initialise the canvas element
@@ -192,8 +175,17 @@
 
     return ctx
   } 
-  
+
   initialiseCanvas()
+
+  var link = document.createElement('a');
+    link.innerHTML = 'download image';
+    link.addEventListener('click', function(ev) {
+      link.href = canvas.toDataURL();
+      link.download = "mypainting.png";
+    }, false);
+document.body.appendChild(link);
+
   </script>
   </body>
 </html>
