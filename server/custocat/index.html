@@ -32,9 +32,9 @@
       </nav>
 
     <div style="display:none">
-      <img src="images/head/image1.jpg" class="imgHead" id="headImage" width="300px" height="300px"> 
-      <img src="images/legs/image1.jpeg" class="imgLegs" id="legsImage" width="300px" height="300px"> 
-      <img src="images/arms/image1.jpg" class="imgArm" id="armsImage" width="300px" height="300px"> 
+      <img src="images/head/image1.png" class="imgHead" id="headImage" width="300px" height="300px"> 
+      <img src="images/legs/image1.png" class="imgLegs" id="legsImage" width="300px" height="300px"> 
+      <img src="images/arms/image1.png" class="imgArm" id="armsImage" width="300px" height="300px"> 
     </div>
 
     <br>
@@ -209,7 +209,7 @@
   } 
 
   function saveImage() {
-    var fileName = prompt("Please enter your Octocat name", "") + ".png"
+    var fileName = prompt("Please enter your Octocat name", "")
     var twitterHandle = prompt("Please enter your Twitter Handle", "@")
     var imgData = ctx.getImageData(0, 0, 600, 600)
 
@@ -251,7 +251,7 @@
 
     return success
 }
-
+  var canvas = document.getElementById('canvas')
   var ctx = initialiseCanvas()  
 
   </script>
