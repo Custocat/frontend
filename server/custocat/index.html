@@ -66,8 +66,8 @@
       Randomise <span class="glyphicon glyphicon-question-sign"></span>
     </button>
 
-    <button onclick="saveImage()" class="btn btn-success">
-      Save Image
+    <button onclick="saveImage()" class="btn btn-success save">
+      Upload Octocat <span class="glyphicon glyphicon-open"></span>
     </button>
     
     <canvas id="canvas" width="600" height="600">
@@ -198,7 +198,7 @@
     let legsImg = document.getElementById('legsImage')
     let armsImg = document.getElementById('armsImage')
 
-    ctx.drawImage(armsImg, 20, 150, 300, 300)
+    ctx.drawImage(armsImg, 40, 170, 300, 300)
     ctx.drawImage(legsImg, 300, 300, 300, 300)
     ctx.drawImage(headImg, 300, 10, 300, 300)
 
