@@ -186,6 +186,18 @@
     ctx.drawImage(armsImg, 40, 150, 300, 300) 
     ctx.drawImage(legsImg, 300, 300, 300, 300) 
     ctx.drawImage(headImg, 300, 10, 300, 300) 
+  
+    // Draw the text
+    ctx.font="30px verdana";
+    ctx.globalAlpha=.75;
+    ctx.fillStyle='white'
+    ctx.fillText("Custocat.com", 350, 340);
+    ctx.fillStyle='black'
+    ctx.fillText("Custocat.com", 352, 342);
+    ctx.globalAlpha=1;
+    // If you remove the watermark on this image and use our site to submit an octocat to the GitHubEducation
+    // challenge and do not acknowledge it was made using the site, know one thing...
+    /// You are a scumbag, don't do that!
   }
 
   function initialiseCanvas() {
@@ -207,20 +219,39 @@
 
   function saveImage() {
     var fileName = prompt("Please enter your Octocat name", "")
-    var twitterHandle = prompt("Please enter your Twitter Handle", "@")
-    var imgData = ctx.getImageData(0, 0, 600, 600)
-
-    var dataURL = canvas.toDataURL("image/png")
-    var blobBin = atob(dataURL.split(',')[1]);
-    var array = [];
-    for(var i = 0; i < blobBin.length; i++) {
-        array.push(blobBin.charCodeAt(i));
+    if (fileName != "" && fileName) {
+      var twitterHandle = prompt("Please enter your Twitter Handle", "@")      
     }
-    var blob=new Blob([new Uint8Array(array)], {type: 'image/png'});
 
-    uploadOctocat(blob, fileName, twitterHandle)
+    if (twitterHandle === "" || twitterHandle === "@") {
+      alert("You must enter a name and Twitter handle")
+    } 
+    
+    else if (fileName && twitterHandle) {
+      var imgData = ctx.getImageData(0, 0, 600, 600)
+      var dataURL = canvas.toDataURL("image/png")
+      var blobBin = atob(dataURL.split(',')[1]);
+      var array = [];
+      for(var i = 0; i < blobBin.length; i++) {
+          array.push(blobBin.charCodeAt(i));
+      }
+      var blob=new Blob([new Uint8Array(array)], {type: 'image/png'});
+
+      var ajaxReturnVal = uploadOctocat(blob, fileName, twitterHandle)
+      if (ajaxReturnVal == 200) {
+        alert("Octocat uploaded successfully!")
+      }
+
+      else if (ajaxReturnVal == 400) {
+        alert("Oh no! Octocat failed to upload, try again")
+      }
+
+      else {
+        alert("Uh oh. We don't know what's happened to your Octocat!")
+      }
+    }
   }
-
+  
   function uploadOctocat(image, name, author) {
     // Creat an instance of FormData
     var data = new FormData()
