@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
+
 function getFiles() {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", '/files', false); // false for synchronous request
-    xmlHttp.send(null);
-    return JSON.parse(xmlHttp.responseText);
+    var xmlHttp = new XMLHttpRequest()
+    xmlHttp.open("GET", "/files", false) // false for synchronous request
+    xmlHttp.send(null)
+    return JSON.parse(xmlHttp.responseText)
 }
 
 var mainArray = getFiles()
@@ -12,9 +14,9 @@ var counterArr = [0, 0, 0]
 
 // Element Array - Holds tags matched with array numbers
 var elementArray = [
-    ['armsImage', 1],
-    ['legsImage', 2],
-    ['headImage', 0]
+    ["armsImage", 1],
+    ["legsImage", 2],
+    ["headImage", 0]
 ]
 
 var ctx = initialiseCanvas()
@@ -71,13 +73,14 @@ function previousImage(element, arrayNum) {
 
 
 function randomiseAll() {
+    let index
     // Loop through all elements in the all elements array
     for (index in elementArray) {
         // Grab the arrayNum of the element type
         let arrayNum = elementArray[index][1]
 
         // Generate random num for an image that isn't the current image
-        randomNum = getRandomInt(0, mainArray[arrayNum].length)
+        let randomNum = getRandomInt(0, mainArray[arrayNum].length)
         while (randomNum == counterArr[arrayNum]) {
             randomNum = getRandomInt(0, mainArray[arrayNum].length)
         }
@@ -92,27 +95,27 @@ function randomiseAll() {
 
 // Get a random int value between a min and a max
 function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
+    return Math.floor(Math.random() * (max - min)) + min
 }
 
 
 function drawImages() {
-    let armsImg = document.getElementById('armsImage')
-    let legsImg = document.getElementById('legsImage')
-    let headImg = document.getElementById('headImage')
+    let armsImg = document.getElementById("armsImage")
+    let legsImg = document.getElementById("legsImage")
+    let headImg = document.getElementById("headImage")
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     ctx.drawImage(armsImg, 40, 150, 300, 300)
     ctx.drawImage(legsImg, 300, 300, 300, 300)
     ctx.drawImage(headImg, 300, 10, 300, 300)
 
     // Draw the text
-    ctx.font = "30px verdana";
-    ctx.globalAlpha = .75;
-    ctx.fillStyle = 'white'
-    ctx.fillText("Custocat.com", 350, 340);
-    ctx.fillStyle = 'black'
-    ctx.fillText("Custocat.com", 352, 342);
-    ctx.globalAlpha = 1;
+    ctx.font = "30px verdana"
+    ctx.globalAlpha = .75
+    ctx.fillStyle = "white"
+    ctx.fillText("Custocat.com", 350, 340)
+    ctx.fillStyle = "black"
+    ctx.fillText("Custocat.com", 352, 342)
+    ctx.globalAlpha = 1
     // If you remove the watermark on this image and use our site to submit an octocat to the GitHubEducation
     // challenge and do not acknowledge it was made using the site, know one thing...
     /// You are a scumbag, don't do that!
@@ -120,13 +123,13 @@ function drawImages() {
 
 function initialiseCanvas() {
     // Initialise the canvas element
-    let canvas = document.getElementById('canvas')
-    let ctx = canvas.getContext('2d')
+    let canvas = document.getElementById("canvas")
+    let ctx = canvas.getContext("2d")
 
     // Drawing functions
-    let headImg = document.getElementById('headImage')
-    let legsImg = document.getElementById('legsImage')
-    let armsImg = document.getElementById('armsImage')
+    let headImg = document.getElementById("headImage")
+    let legsImg = document.getElementById("legsImage")
+    let armsImg = document.getElementById("armsImage")
 
     ctx.drawImage(armsImg, 40, 170, 300, 300)
     ctx.drawImage(legsImg, 300, 300, 300, 300)
@@ -146,14 +149,13 @@ function saveImage() {
     }
 
     else if (fileName && twitterHandle) {
-        var imgData = ctx.getImageData(0, 0, 600, 600)
         var dataURL = canvas.toDataURL("image/png")
-        var blobBin = atob(dataURL.split(',')[1]);
-        var array = [];
+        var blobBin = atob(dataURL.split(",")[1])
+        var array = []
         for (var i = 0; i < blobBin.length; i++) {
-            array.push(blobBin.charCodeAt(i));
+            array.push(blobBin.charCodeAt(i))
         }
-        var blob = new Blob([new Uint8Array(array)], { type: 'image/png' });
+        var blob = new Blob([new Uint8Array(array)], { type: "image/png" })
 
         var ajaxReturnVal = uploadOctocat(blob, fileName, twitterHandle)
         if (ajaxReturnVal == 200) {
@@ -198,5 +200,5 @@ function uploadOctocat(image, name, author) {
     return success
 }
 
-var canvas = document.getElementById('canvas')
-var ctx = initialiseCanvas()  
+var canvas = document.getElementById("canvas")
+ctx = initialiseCanvas()  
