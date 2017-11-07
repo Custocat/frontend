@@ -148,11 +148,11 @@ function saveImage() {
         var blob = new Blob([new Uint8Array(array)], { type: "image/png" })
 
         var ajaxReturnVal = uploadOctocat(blob, fileName, twitterHandle)
-        if (ajaxReturnVal == 200) {
+        if (!ajaxReturnVal.err) {
             alert("Octocat uploaded successfully!")
         }
 
-        else if (ajaxReturnVal == 400) {
+        else if (ajaxReturnVal.err) {
             alert("Oh no! Octocat failed to upload, try again")
         }
 
@@ -168,13 +168,11 @@ function uploadOctocat(image, name, author) {
 
     // Success trakcer
     var success = false
-    console.log(image)
+
     // Add keys
     data.append("octocat", image)
     data.append("name", name)
     data.append("submitter", author)
-
-    console.log(data)
 
     $.ajax({
         url: "https://api.custocat.com/image",
@@ -183,8 +181,8 @@ function uploadOctocat(image, name, author) {
         data: data,
         processData: false,
         contentType: false,
-        success: function (res) { success = true; console.log(res) },
-        error: function (err) { success = false; console.error(err) }
+        success: function (res) { success = true },
+        error: function (err) { success = false }
     })
 
     return success
