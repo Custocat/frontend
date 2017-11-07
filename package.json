@@ -4,9 +4,9 @@
   "description": "An electron based application to create a custom octocat",
   "main": "main.js",
   "scripts": {
-    "test": "node server.js test",
-    "start": "electron .",
-    "serve": "node server.js"
+    "test": "npm run build && node dist/server.js test",
+    "build": "rimraf dist/ && babel src/ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "start": "npm run build && node dist/server.js"
   },
   "repository": "https://github.com/aaronosher/custocat",
   "keywords": [
