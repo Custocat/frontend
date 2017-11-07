@@ -1,0 +1,35 @@
+{
+  "name": "Custocat",
+  "version": "1.0.0",
+  "description": "An electron based application to create a custom octocat",
+  "main": "main.js",
+  "scripts": {
+    "test": "npm run build && node dist/server.js test",
+    "build": "rimraf dist/ && babel src/ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "start": "npm run build && node dist/server.js"
+  },
+  "repository": "https://github.com/aaronosher/custocat",
+  "keywords": [
+    "Octocat",
+    "Custom Octocat",
+    "GitHub",
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "Aaron Osher, Ollie Favell, Kelvin Minguell",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "express": "^4.16.2",
+    "node-env-file": "^0.1.8",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.10.0",
+    "rimraf": "^2.6.2"
+  }
+}

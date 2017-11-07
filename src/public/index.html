@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>CustoCat</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
+      <a class="navbar-brand" href="/">CustoCat.com</a>
+      <ul class="nav navbar-nav">
+          <li>
+              <a href="https://library.custocat.com">Custocat Libaray</a>
+          </li>
+          <li class="active">
+            <a href="/">Create your own
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li>
+              <a href="https://www.twitter.com/custocat" target="_blank">Twitter</a>
+          </li>
+          <li>
+              <a href="https://github.com/aaronosher/custocat" target="_blank">GitHub</a>
+          </li>
+          <li>
+              <a href="https://devpost.com/software/custocat" target="_blank">DevPost</a>
+          </li>
+      </ul>
+    </nav>
+
+    <div style="display:none">
+      <img src="images/head/image1.png" class="imgHead" id="headImage" width="300px" height="300px"> 
+      <img src="images/legs/image1.png" class="imgLegs" id="legsImage" width="300px" height="300px"> 
+      <img src="images/arms/image1.png" class="imgArm" id="armsImage" width="300px" height="300px"> 
+    </div>
+
+    <br>
+
+    <div>
+      <button onclick="nextImage('headImage', 0)" class="btn btn-primary nextCat">
+          <span class="glyphicon glyphicon-forward"> Next Cat 
+      </button> 
+      <button onclick="nextImage('legsImage', 2)" class="btn btn-primary nextOct">
+          <span class="glyphicon glyphicon-forward"> Next Octopus 
+      </button> 
+      <button onclick="nextImage('armsImage', 1)" class="btn btn-primary nextArm">
+          <span class="glyphicon glyphicon-forward"> Next Arm 
+      </button> 
+      
+  
+      <button onclick="previousImage('headImage', 0)" class="btn btn-info prevCat">
+        Previous Cat <span class="glyphicon glyphicon-backward"></span>
+      </button>    
+      <button onclick="previousImage('legsImage', 2)" class="btn btn-info prevOct">
+        Previous Octopus <span class="glyphicon glyphicon-backward"></span>
+      </button>
+      <button onclick="previousImage('armsImage', 1)" class="btn btn-info prevArm">
+        Previous Arm <span class="glyphicon glyphicon-backward"></span>
+      </button>
+    </div>
+
+
+    <button onclick="randomiseAll()" class="btn btn-danger random">
+      Randomise <span class="glyphicon glyphicon-question-sign"></span>
+    </button>
+
+    <button onclick="saveImage()" class="btn btn-success save">
+      Upload Octocat <span class="glyphicon glyphicon-open"></span>
+    </button>
+    
+    <canvas id="canvas" width="600" height="600">
+    </canvas>
+    
+    <div class="footer container small center">
+      The Octocat is a registered trademark of GitHub. We do not claim the rights to any images on our site.
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
