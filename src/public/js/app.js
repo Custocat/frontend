@@ -125,16 +125,6 @@ function initialiseCanvas() {
     // Initialise the canvas element
     let canvas = document.getElementById("canvas")
     let ctx = canvas.getContext("2d")
-
-    // Drawing functions
-    let headImg = document.getElementById("headImage")
-    let legsImg = document.getElementById("legsImage")
-    let armsImg = document.getElementById("armsImage")
-
-    ctx.drawImage(armsImg, 40, 170, 300, 300)
-    ctx.drawImage(legsImg, 300, 300, 300, 300)
-    ctx.drawImage(headImg, 300, 10, 300, 300)
-
     return ctx
 }
 
@@ -202,3 +192,4 @@ function uploadOctocat(image, name, author) {
 
 var canvas = document.getElementById("canvas")
 ctx = initialiseCanvas()  
+drawImages()
