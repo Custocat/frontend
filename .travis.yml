@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - cp example.env .env
+  - ls -a
+  - docker build -t custocat-frontend .
+  - docker images
+
+script:
+  - docker run -e CMD=test custocat-frontend:latest
