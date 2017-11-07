@@ -39,3 +39,7 @@ app.use(express.static('.'))
 
 app.listen(env.PORT, env.HOST)
 console.log("Server running on " + env.HOST + ":" + env.PORT + ". Use ctr+c to exit.")
+
+if (process.argv.slice(2)[0] == 'test') {
+    process.exit(0)
+}
