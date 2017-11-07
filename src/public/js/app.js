@@ -193,8 +193,8 @@ function uploadOctocat(image, name, author) {
         data: data,
         processData: false,
         contentType: false,
-        success: function (res) { success = true; console.log(res); },
-        error: function (err) { success = false; console.error(err); }
+        success: function (res) { success = true; console.log(res) },
+        error: function (err) { success = false; console.error(err) }
     })
 
     return success
